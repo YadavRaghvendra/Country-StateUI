@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <!-- Form Section -->
+  <form [formGroup]="form" (ngSubmit)="addNewCountry()">
+    <div class="mb-3">
+      <label for="countryName" class="form-label">Country Name</label>
+      <input type="text" class="form-control"id="countryName"formControlName="countryName"/>
+    </div>
+    <div class="mb-3">
+      <label for="countryCode" class="form-label">Country Code</label>
+      <input type="text" class="form-control" id="countryCode" formControlName="countryCode"/>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">SAVE</button>
+  </form>
+
+  <!-- Table Section -->
+  <div class="mt-4">
+    <h4>Country Details</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Country Name</th>
+          <th scope="col">Country Code</th>
+          <th scope="col">CreatedBy</th>
+          <th scope="col">CreatedOn</th>
+          <th scope="col">LastUpdateOn</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(country of countries; track country; let i = $index){
+        <tr>
+          <td scope="row">{{ i+1 }}</td>
+          <td>{{ country.countryName }}</td>
+          <td>{{ country.countryCode }}</td>
+          <td>{{ country.createdBy }}</td> 
+          <td>{{ commonService.formatDate(country.createdOn) }}</td>
+          <td>{{ commonService.formatDate(country.lastUpdatedOn) }}</td>
+          <td>
+            <ul class="list-inline m-0">
+              <li class="list-inline-item">
+                  <button class="btn btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top" title="Edit" (click)="editCountry(country)"><i class="fa fa-edit"></i>Edit</button>
+              </li>
+              <li class="list-inline-item">
+                  <button class="btn btn-danger btn-sm" type="button" data-toggle="tooltip" (click)="deleteCountry(country.id)" data-placement="top" title="Delete"><i class="fa fa-trash"></i>Delete</button>
+              </li>
+          </ul>
+          </td>
+        </tr>
+        }
+
+      </tbody>
+    </table>
+  </div>
+</div>

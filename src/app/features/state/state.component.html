@@ -1,0 +1,60 @@
+<div class="container mt-4">
+    <!-- Form Section -->
+    <form [formGroup]="form" (ngSubmit)="upsertState()">
+        <div class="mb-3">
+            <label for="country" class="form-label">Country Name</label>
+            <select class="form-control" id="country" formControlName="countryId">
+                <option value="" selected>---Select---</option>
+                @for(country of countries; track country; let i = $index){
+                <option [value]="country.id">{{ country.countryName }}</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="stateName" class="form-label">State Name</label>
+            <input type="text" class="form-control" id="stateName" formControlName="stateName" />
+        </div>
+        <div class="mb-3">
+            <label for="stateCode" class="form-label">State Code</label>
+            <input type="text" class="form-control" id="stateCode" formControlName="stateCode" />
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">SAVE</button>
+    </form>
+
+
+    <!-- Table Section -->
+    <div class="mt-4">
+        <h4>State Details</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State Name</th>
+                    <th scope="col">State Code</th>
+                    <th scope="col">Country Name</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Created On</th>
+                    <th scope="col">Last Updated On</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(state of states; track state; let i = $index){
+                <tr>
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ state.stateName }}</td>
+                    <td>{{ state.stateCode }}</td>
+                    <td>{{getCountryNameById(state.countryId)}}</td>
+                    <td>{{ state.createdBy }}</td>
+                    <td>{{ commonService.formatDate(state.createdOn) }}</td>
+                    <td>{{ commonService.formatDate(state.lastUpdatedOn) }}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm me-2" (click)="editState(state)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteCountry(state.id)">Delete</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
