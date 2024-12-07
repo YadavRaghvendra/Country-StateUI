@@ -7,7 +7,7 @@ import { CommonService } from '../../services/common.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-cuntry',
+  selector: 'app-Country',
   standalone: true,
   imports: [ReactiveFormsModule, HttpClientModule,CommonModule],
   templateUrl: './country.component.html',
